@@ -10,9 +10,14 @@ import {
 // Post new appointment
 export const createAppointmentController = async (req: Request, res: Response) => {
   try {
+
+    console.log("Creating appointment with data:", req.body);
+    console.log("Request body:", req.body);
+    
     const appointment = await createAppointmentService(req.body);
     res.status(201).json({ message: "Appointment created", data: appointment });
   } catch (error: any) {
+    console.error("Error creating appointment:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -64,7 +69,7 @@ export const deleteAppointmentController = async (req: Request, res: Response) =
 
     if (!deleted) return res.status(404).json({ message: "Appointment not found" });
 
-    res.status(204).json({ message: "Appointment deleted" });
+    res.status(204).send();
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

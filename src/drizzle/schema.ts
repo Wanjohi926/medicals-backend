@@ -34,8 +34,8 @@ export const DoctorsTable = pgTable("doctors", {
   created_at: timestamp("created_at").defaultNow(),
   updated_at: timestamp("updated_at").defaultNow(),
   is_verified: boolean("is_verified").default(false),
-  verification_code: varchar("verification_code", { length: 6 })
-
+  verification_code: varchar("verification_code", { length: 6 }),
+  role: RoleEnum("role").default("doctor").notNull(), 
 });
 
 // Appointments Table
