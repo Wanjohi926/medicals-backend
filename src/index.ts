@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 
 import UserRoutes from './users/users.router';
 import doctor from './doctors/doctors.router';
@@ -8,6 +9,12 @@ import payment from './Payments/payments.router';
 import prescriptions from './Prescriptions/prescriptions.router'
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
+
 app.use(express.json());
 
 UserRoutes(app);

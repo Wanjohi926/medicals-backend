@@ -1,28 +1,16 @@
-  import "dotenv/config"
-  import dotenv from 'dotenv';
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
+import * as schema from "./schema";
 
-  import { drizzle } from "drizzle-orm/node-postgres"
-  import { Client } from "pg"
-  import * as schema from "./schema"
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-  dotenv.config();
+const db = drizzle(pool, { schema, logger: true });
 
-  export const client = new Client({
-      connectionString: process.env.Database_URL as string
-  })
-
-  const main = async () => {
-      await client.connect()
-  }
-  main().then(() => {
-      console.log("Connected to the database")
-  }).catch((error) => {
-      console.error("Error connecting to the database:", error)
-  })
-
-
-
-  const db = drizzle(client, { schema, logger: true })
-
-  export default db
-
+export default db;
+export const client = pool; 
